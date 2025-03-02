@@ -56,16 +56,22 @@
         .content-wrapper {
             margin-left: 260px;
             padding: 20px;
+            background-color: #1a1a1a;
+            color: white;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
         }
 
         /* Profile section */
         .profile-section {
             max-width: 600px;
-            margin: 0 auto;
-            background: white;
+            margin: 50px auto 0; /* Adjusted margin to move it lower */
+            background: #2c2c2c;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in-out;
         }
 
         /* Avatar */
@@ -98,9 +104,45 @@
 
         /* Read-only email field */
         .read-only {
-            background-color: #e5e5e5;
-            color: #555;
+            background-color: #3a3a3a;
+            color: #bbb;
             cursor: not-allowed;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 10%);
+            background-size: 50px 50px;
+            animation: float 5s infinite ease-in-out;
+            z-index: -1;
         }
     </style>
 </head>
@@ -118,6 +160,7 @@
 
     <!-- Main content -->
     <div class="content-wrapper">
+        <div class="background-animation"></div>
         <!-- Navigation -->
         <nav class="bg-blue-700 p-5 text-white shadow-lg">
             <div class="container mx-auto flex justify-between items-center">
@@ -135,7 +178,7 @@
 
         <!-- Profile Section -->
         <section class="profile-section">
-            <h2 class="text-2xl font-bold text-gray-800 text-center mb-4">👤 Моят Профил</h2>
+            <h2 class="text-2xl font-bold text-gray-200 text-center mb-4">👤 Моят Профил</h2>
 
             <div class="avatar-container">
                 <img src="{{ user.avatar }}" alt="Аватар" class="avatar">
@@ -144,28 +187,41 @@
             <!-- Profile Edit Form -->
             <form method="POST">
                 <!-- ✅ Read-only email field -->
-                <label class="block font-semibold">Имейл:</label>
+                <label class="block font-semibold text-gray-200">Имейл:</label>
                 <input type="email" value="{{ user.email }}" class="w-full p-2 border rounded mt-1 read-only" readonly>
 
-                <label class="block font-semibold mt-2">Име и Фамилия:</label>
-                <input type="text" name="full_name" value="{{ user.full_name }}" required class="w-full p-2 border rounded mt-1">
+                <label class="block font-semibold text-gray-200 mt-2">Име и Фамилия:</label>
+                <input type="text" name="full_name" value="{{ user.full_name }}" required class="w-full p-2 border rounded mt-1 bg-gray-700 text-gray-200">
 
-                <label class="block font-semibold mt-2">Пол:</label>
-                <select name="gender" class="w-full p-2 border rounded mt-1">
+                <label class="block font-semibold text-gray-200 mt-2">Пол:</label>
+                <select name="gender" class="w-full p-2 border rounded mt-1 bg-gray-700 text-gray-200">
                     <option value="male" {% if user.gender == "male" %}selected{% endif %}>Мъж</option>
                     <option value="female" {% if user.gender == "female" %}selected{% endif %}>Жена</option>
                     <option value="other" {% if user.gender == "other" %}selected{% endif %}>Друг</option>
                 </select>
 
-                <label class="block font-semibold mt-2">Парола (оставете празно за без промяна):</label>
-                <input type="password" name="password" class="w-full p-2 border rounded mt-1">
+                <label class="block font-semibold text-gray-200 mt-2">Парола (оставете празно за без промяна):</label>
+                <input type="password" name="password" class="w-full p-2 border rounded mt-1 bg-gray-700 text-gray-200">
 
                 <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md mt-4 w-full">Запази промените</button>
             </form>
 
             <a href="{{ request.referrer or '/' }}" class="bg-gray-500 text-white px-4 py-2 rounded-md mt-4 inline-block">⬅ Назад</a>
         </section>
+
+        <!-- Favorite Topics Section -->
+        <section class="profile-section mt-8">
+            <h2 class="text-2xl font-bold text-gray-200 text-center mb-4">⭐ Любими Теми</h2>
+            <ul class="list-disc list-inside text-lg text-gray-200">
+                {% for topic in topics %}
+                    <li><a href="/topic/{{ topic.id }}" class="text-blue-400 underline">{{ topic.title }}</a></li>
+                {% else %}
+                    <li>Нямате добавени любими теми.</li>
+                {% endfor %}
+            </ul>
+        </section>
     </div>
 
 </body>
 </html>
+
