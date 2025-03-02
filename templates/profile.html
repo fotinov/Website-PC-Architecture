@@ -9,23 +9,38 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        /* Sidebar */
+        /* 🌄 Фонова снимка */
+        body {
+            background: url("{{ url_for('static', filename='assets/page.png') }}") no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+
+        /* 🎨 Sidebar със gradient и прозрачност */
         .sidebar {
             width: 250px;
             height: 100vh;
             position: fixed;
             left: 0;
             top: 0;
-            background-color: #1e3a8a;
+            background: linear-gradient(to bottom, rgba(30, 58, 138, 0.8), rgba(106, 13, 173, 0.7), rgba(0, 0, 0, 0.6));
             padding: 20px;
             color: white;
             overflow-y: auto;
+            transition: all 0.3s ease-in-out;
+            backdrop-filter: blur(6px);
+        }
+
+        /* 🔥 Sidebar hover подсветка */
+        .sidebar:hover {
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
         }
 
         .sidebar h2 {
             font-size: 1.25rem;
             font-weight: bold;
             margin-bottom: 15px;
+            text-transform: uppercase;
         }
 
         .sidebar ul {
@@ -35,38 +50,110 @@
 
         .sidebar li {
             position: relative;
+            border-radius: 5px;
             transition: transform 0.3s ease-in-out, padding-left 0.3s ease-in-out;
         }
 
+        /* 📌 Sidebar линкове */
         .sidebar a {
             font-weight: bold;
             display: block;
             padding: 10px;
             color: white;
             text-decoration: none;
-            transition: transform 0.3s ease, padding-left 0.3s ease;
+            transition: transform 0.3s ease, padding-left 0.3s ease, background 0.3s ease;
         }
 
         .sidebar li:hover {
-            transform: scale(1.05);
-            padding-left: 10px;
+            transform: translateX(12px);
         }
 
-        /* Main content */
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* 🌟 Sidebar фонова снимка при hover */
+        .sidebar li::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            z-index: -1;
+        }
+
+        .sidebar li:hover::before {
+            opacity: 1;
+        }
+
+        /* 🔹 Позициониране на съдържанието */
         .content-wrapper {
             margin-left: 260px;
             padding: 20px;
-            background-color: #1a1a1a;
-            color: white;
-            min-height: 100vh;
-            position: relative;
-            overflow: hidden;
         }
 
-        /* Profile section */
+        /* 🌈 Navbar с още по-прозрачен фон */
+        .navbar {
+            background: rgba(30, 58, 138, 0.5);
+            padding: 10px 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+            backdrop-filter: blur(3px);
+        }
+
+        /* 🔹 Navbar линкове */
+        .nav-link {
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ffdd57;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* 👤 Потребителска кутия */
+        .user-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .user-info:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 🔘 Бутони (Профил, Изход) */
+        .btn-transparent {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-transparent:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        /* 👤 Профилна кутия */
         .profile-section {
             max-width: 600px;
-            margin: 50px auto 0; /* Adjusted margin to move it lower */
+            margin: 50px auto;
             background: #2c2c2c;
             padding: 20px;
             border-radius: 10px;
@@ -74,7 +161,7 @@
             animation: fadeIn 1s ease-in-out;
         }
 
-        /* Avatar */
+        /* 👤 Аватар */
         .avatar-container {
             text-align: center;
             margin-bottom: 20px;
@@ -88,61 +175,23 @@
             border: 3px solid #1e3a8a;
         }
 
-        .file-input {
-            display: none;
-        }
-
-        .upload-btn {
-            margin-top: 10px;
-            background: #1e3a8a;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        /* Read-only email field */
+        /* 📩 Форма */
         .read-only {
             background-color: #3a3a3a;
             color: #bbb;
             cursor: not-allowed;
         }
 
-        /* Animations */
+        /* ✨ Анимация */
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(-10px);
+                transform: scale(0.8);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: scale(1);
             }
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-
-        .background-animation {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 10%);
-            background-size: 50px 50px;
-            animation: float 5s infinite ease-in-out;
-            z-index: -1;
         }
     </style>
 </head>
@@ -150,43 +199,63 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-        <h2>📌 Навигация</h2>
+        <h2 class="flex items-center space-x-2">
+            <img src="{{ url_for('static', filename='assets/side_bar.svg') }}" alt="Теми" class="w-6 h-6">
+            <span>Теми</span>
+        </h2>
         <ul>
-            <li><a href="/">🏠 Начало</a></li>
-            <li><a href="/about">ℹ За нас</a></li>
-            <li><a href="/contact">📩 Контакти</a></li>
+            <li><a href="/topic/1">Въведение в компютърните архитектури</a></li>
+            <li><a href="/topic/2">Основни компоненти на компютъра</a></li>
+            <li><a href="/topic/3">Централен процесор (CPU)</a></li>
+            <li><a href="/topic/4">Памет и управление на паметта</a></li>
+            <li><a href="/topic/5">Входно-изходни системи (I/O)</a></li>
+            <li><a href="/topic/6">Компютърни инструкции и набори от инструкции (ISA)</a></li>
+            <li><a href="/topic/7">Паралелни и многопроцесорни архитектури</a></li>
+            <li><a href="/topic/8">Оптимизация на производителността</a></li>
+            <li><a href="/topic/9">Специализирани архитектури</a></li>
+            <li><a href="/topic/10">Симулации и практически примери</a></li>
         </ul>
     </div>
 
-    <!-- Main content -->
+    <!-- Основно съдържание -->
     <div class="content-wrapper">
-        <div class="background-animation"></div>
-        <!-- Navigation -->
-        <nav class="bg-blue-700 p-5 text-white shadow-lg">
-            <div class="container mx-auto flex justify-between items-center">
-                <a href="/" class="text-2xl font-bold">📚 Компютърни Архитектури</a>
-                <ul class="flex space-x-6">
-                    <li><a href="/" class="nav-link text-lg">Начало</a></li>
-                    <li><a href="/about" class="nav-link text-lg">За нас</a></li>
-                    <li><a href="/contact" class="nav-link text-lg">Контакт</a></li>
-                </ul>
-                <div>
-                    <a href="/logout" class="btn-hover bg-red-500 text-white px-4 py-2 rounded-md">Изход</a>
+    <nav class="navbar text-white shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold flex items-center space-x-2">
+                <img src="{{ url_for('static', filename='assets/navi_bar.svg') }}" alt="Лого" class="w-8 h-8">
+                <span>Компютърни Архитектури</span>
+            </a>
+            <ul class="flex space-x-6">
+                <li><a href="/" class="nav-link text-lg">Начало</a></li>
+                <li><a href="/about" class="nav-link text-lg">За нас</a></li>
+                <li><a href="/contact" class="nav-link text-lg">Контакт</a></li>
+            </ul>
+            {% if current_user.is_authenticated %}
+                <div class="user-info flex items-center space-x-4">
+                    <span>👋 Здравей, {{ current_user.full_name }}!</span>
+                    <img src="{{ current_user.avatar }}" alt="Аватар" class="w-10 h-10 rounded-full border-2 border-white">
+                    <a href="/profile" class="btn-transparent">👤 Профил</a>
+                    <a href="/logout" class="btn-transparent">🚪 Изход</a>
                 </div>
-            </div>
-        </nav>
+            {% else %}
+                <div class="auth-buttons flex space-x-4">
+                    <a href="/login" class="btn-transparent bg-green-500 px-4 py-2 rounded-md">Вход</a>
+                    <a href="/signup" class="btn-transparent bg-yellow-500 px-4 py-2 rounded-md">Регистрация</a>
+                </div>
+            {% endif %}
+        </div>
+    </nav>
+</div>
 
-        <!-- Profile Section -->
-        <section class="profile-section">
+        <!-- 👤 Профилен Прозорец -->
+        <section class="profile-section fade-in">
             <h2 class="text-2xl font-bold text-gray-200 text-center mb-4">👤 Моят Профил</h2>
 
             <div class="avatar-container">
                 <img src="{{ user.avatar }}" alt="Аватар" class="avatar">
             </div>
 
-            <!-- Profile Edit Form -->
             <form method="POST">
-                <!-- ✅ Read-only email field -->
                 <label class="block font-semibold text-gray-200">Имейл:</label>
                 <input type="email" value="{{ user.email }}" class="w-full p-2 border rounded mt-1 read-only" readonly>
 
@@ -200,28 +269,12 @@
                     <option value="other" {% if user.gender == "other" %}selected{% endif %}>Друг</option>
                 </select>
 
-                <label class="block font-semibold text-gray-200 mt-2">Парола (оставете празно за без промяна):</label>
-                <input type="password" name="password" class="w-full p-2 border rounded mt-1 bg-gray-700 text-gray-200">
-
                 <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md mt-4 w-full">Запази промените</button>
             </form>
 
             <a href="{{ request.referrer or '/' }}" class="bg-gray-500 text-white px-4 py-2 rounded-md mt-4 inline-block">⬅ Назад</a>
         </section>
-
-        <!-- Favorite Topics Section -->
-        <section class="profile-section mt-8">
-            <h2 class="text-2xl font-bold text-gray-200 text-center mb-4">⭐ Любими Теми</h2>
-            <ul class="list-disc list-inside text-lg text-gray-200">
-                {% for topic in topics %}
-                    <li><a href="/topic/{{ topic.id }}" class="text-blue-400 underline">{{ topic.title }}</a></li>
-                {% else %}
-                    <li>Нямате добавени любими теми.</li>
-                {% endfor %}
-            </ul>
-        </section>
     </div>
 
 </body>
 </html>
-
