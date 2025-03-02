@@ -4,13 +4,28 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import os
+from dotenv import load_dotenv
+
+
+# ✅ Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = # ✅ Replace with your secret key
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+
+# ✅ Use secret key from .env
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "fallback-secret-key")
+
+# ✅ Use database URL from .env
+
+basedir = os.path.abspath(os.path.dirname(__file__))  # Get absolute project path
+db_path = os.path.join(basedir, "instance", "site.db")  # Set full DB path
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"  # Use absolute path
+
+
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
+
 
 # ✅ Create directories if they don't exist
 if not os.path.exists("static/assets"):
