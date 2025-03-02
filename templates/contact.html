@@ -9,48 +9,89 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        .btn-back {
-            background-color: #1e3a8a;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
+        /* 🖤 Тъмен фон */
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        /* Контейнер за формата */
+        .container {
+            background: #1e1e1e;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+            padding: 20px;
+        }
+
+        /* Инпут и текстариа */
+        input, textarea {
+            background: #2c2c2c;
+            color: #e0e0e0;
+            border: 1px solid #444;
+            padding: 10px;
+        }
+
+        /* Инпут при фокус */
+        input:focus, textarea:focus {
+            border-color: #3b82f6;
+            outline: none;
+        }
+
+        /* Бутон */
+        .btn-hover {
+            background: #3b82f6;
             transition: background 0.3s ease;
         }
+
+        .btn-hover:hover {
+            background: #2563eb;
+        }
+
+        /* Бутон Назад */
+        .btn-back {
+            background: #1e3a8a;
+            color: white;
+            transition: background 0.3s ease;
+            padding: 10px 15px;
+            display: inline-block;
+            border-radius: 5px;
+        }
+
         .btn-back:hover {
-            background-color: #3b82f6;
+            background: #2563eb;
         }
     </style>
 </head>
-<body class="bg-gray-100 flex flex-col items-center min-h-screen">
+<body class="flex flex-col items-center min-h-screen">
 
-    <div class="container mx-auto p-10 bg-white shadow-lg rounded-lg max-w-lg">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">📩 Форма за обратна връзка</h1>
+    <div class="container mx-auto shadow-lg rounded-lg max-w-lg">
+        <h1 class="text-3xl font-bold text-center mb-6">📩 Форма за обратна връзка</h1>
 
-        <!-- Flash съобщение -->
-        {% with messages = get_flashed_messages() %}
+        <!-- ✅ Flash message -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                <div class="bg-green-500 text-white p-3 rounded mb-4">
-                    {{ messages[0] }}
-                </div>
+                {% for category, message in messages %}
+                    {% if category == 'success' %}
+                        <div class="bg-green-500 text-white p-3 rounded mb-4 text-center">
+                            {{ message }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
             {% endif %}
         {% endwith %}
 
         <form action="/contact" method="POST" class="space-y-4">
-            <input type="text" name="name" placeholder="Вашето име" required
-                   class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            <input type="text" name="name" placeholder="Вашето име" required class="w-full px-4 py-2 border rounded-lg">
 
-            <input type="email" name="email" placeholder="Вашият имейл" required
-                   class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            <input type="email" name="email" placeholder="Вашият имейл" required class="w-full px-4 py-2 border rounded-lg">
 
-            <textarea name="message" placeholder="Вашето съобщение" rows="4" required
-                      class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+            <textarea name="message" placeholder="Вашето съобщение" rows="4" required class="w-full px-4 py-2 border rounded-lg"></textarea>
 
-            <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg btn-hover">📨 Изпрати</button>
+            <button type="submit" class="w-full text-white px-4 py-2 rounded-lg btn-hover">📨 Изпрати</button>
         </form>
 
-        <!-- Бутон Назад -->
+        <!-- 🔙 Back Button -->
         <div class="mt-6 text-center">
-            <a href="/" class="btn-back inline-block">⬅ Назад</a>
+            <a href="/" class="btn-back">⬅ Назад</a>
         </div>
     </div>
 
