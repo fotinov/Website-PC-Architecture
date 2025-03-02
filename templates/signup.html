@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Регистрация</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-200 flex justify-center items-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-2xl font-bold text-center">Регистрация</h2>
+        <form method="POST" class="mt-4">
+            <label class="block font-semibold">Име и Фамилия:</label>
+            <input type="text" name="full_name" required class="w-full p-2 border rounded mt-1">
+
+            <label class="block font-semibold mt-2">Имейл:</label>
+            <input type="email" name="email" required class="w-full p-2 border rounded mt-1">
+
+            <label class="block font-semibold mt-2">Пол:</label>
+            <select name="gender" class="w-full p-2 border rounded mt-1">
+                <option value="male">Мъж</option>
+                <option value="female">Жена</option>
+                <option value="other">Друг</option>
+            </select>
+
+            <label class="block font-semibold mt-2">Парола:</label>
+            <input type="password" name="password" required class="w-full p-2 border rounded mt-1">
+
+            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md mt-4 w-full">Регистрирай се</button>
+        </form>
+
+        <p class="text-center mt-4">Вече имате акаунт? <a href="/login" class="text-blue-500">Вход</a></p>
+    </div>
+
+</body>
+</html>
