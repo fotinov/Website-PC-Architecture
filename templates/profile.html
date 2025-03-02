@@ -255,6 +255,13 @@
                 <img src="{{ user.avatar }}" alt="Аватар" class="avatar">
             </div>
 
+            <!-- ✅ Flash съобщение -->
+            {% if success_message %}
+                <div class="bg-green-500 text-white p-3 rounded mb-4 text-center">
+                    {{ success_message }}
+                </div>
+            {% endif %}
+
             <!-- Profile Edit Form -->
             <form method="POST">
                 <!-- ✅ Read-only email field -->
@@ -292,6 +299,7 @@
             </ul>
         </section>
     </div>
+
 
 </body>
 </html>
