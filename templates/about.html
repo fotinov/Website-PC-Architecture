@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>За нас</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .btn-back {
+            background-color: #1e3a8a;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .btn-back:hover {
+            background-color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center min-h-screen">
+
+    <div class="container mx-auto p-10 bg-white shadow-lg rounded-lg max-w-lg">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">👤 За нас</h1>
+
+        <p class="text-lg text-gray-700"><strong>Име:</strong> Димитър Димитров</p>
+        <p class="text-lg text-gray-700"><strong>Клас:</strong> 12-и</p>
+        <p class="text-lg text-gray-700"><strong>Телефон:</strong> <a href="tel:+359892285494" class="text-blue-500">+359 892 285 494</a></p>
+
+        <!-- Бутон Назад -->
+        <div class="mt-6 text-center">
+            <a href="/" class="btn-back inline-block">⬅ Назад</a>
+        </div>
+    </div>
+
+</body>
+</html>

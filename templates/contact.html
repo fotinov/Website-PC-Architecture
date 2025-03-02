@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Контакти</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .btn-back {
+            background-color: #1e3a8a;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .btn-back:hover {
+            background-color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center min-h-screen">
+
+    <div class="container mx-auto p-10 bg-white shadow-lg rounded-lg max-w-lg">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">📩 Форма за обратна връзка</h1>
+
+        <!-- Flash съобщение -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="bg-green-500 text-white p-3 rounded mb-4">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form action="/contact" method="POST" class="space-y-4">
+            <input type="text" name="name" placeholder="Вашето име" required
+                   class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+
+            <input type="email" name="email" placeholder="Вашият имейл" required
+                   class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+
+            <textarea name="message" placeholder="Вашето съобщение" rows="4" required
+                      class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+
+            <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg btn-hover">📨 Изпрати</button>
+        </form>
+
+        <!-- Бутон Назад -->
+        <div class="mt-6 text-center">
+            <a href="/" class="btn-back inline-block">⬅ Назад</a>
+        </div>
+    </div>
+
+</body>
+</html>
