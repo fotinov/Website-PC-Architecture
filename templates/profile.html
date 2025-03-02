@@ -247,15 +247,17 @@
     </nav>
 </div>
 
-        <!-- 👤 Профилен Прозорец -->
-        <section class="profile-section fade-in">
+        <!-- Profile Section -->
+        <section class="profile-section">
             <h2 class="text-2xl font-bold text-gray-200 text-center mb-4">👤 Моят Профил</h2>
 
             <div class="avatar-container">
                 <img src="{{ user.avatar }}" alt="Аватар" class="avatar">
             </div>
 
+            <!-- Profile Edit Form -->
             <form method="POST">
+                <!-- ✅ Read-only email field -->
                 <label class="block font-semibold text-gray-200">Имейл:</label>
                 <input type="email" value="{{ user.email }}" class="w-full p-2 border rounded mt-1 read-only" readonly>
 
@@ -269,10 +271,25 @@
                     <option value="other" {% if user.gender == "other" %}selected{% endif %}>Друг</option>
                 </select>
 
+                <label class="block font-semibold text-gray-200 mt-2">Парола (оставете празно за без промяна):</label>
+                <input type="password" name="password" class="w-full p-2 border rounded mt-1 bg-gray-700 text-gray-200">
+
                 <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md mt-4 w-full">Запази промените</button>
             </form>
 
             <a href="{{ request.referrer or '/' }}" class="bg-gray-500 text-white px-4 py-2 rounded-md mt-4 inline-block">⬅ Назад</a>
+        </section>
+
+        <!-- Favorite Topics Section -->
+        <section class="profile-section mt-8">
+            <h2 class="text-2xl font-bold text-gray-200 text-center mb-4">⭐ Любими Теми</h2>
+            <ul class="list-disc list-inside text-lg text-gray-200">
+                {% for topic in topics %}
+                    <li><a href="/topic/{{ topic.id }}" class="text-blue-400 underline">{{ topic.title }}</a></li>
+                {% else %}
+                    <li>Нямате добавени любими теми.</li>
+                {% endfor %}
+            </ul>
         </section>
     </div>
 
