@@ -127,22 +127,23 @@ def signup():
         password = generate_password_hash(request.form["password"])
         gender = request.form["gender"]
 
-        # ✅ Check if email already exists
+        # ✅ Проверка дали имейлът вече съществува
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
-            flash("❌ Акаунт с този имейл вече съществува!", "danger")
+            flash("❌ Акаунт с този имейл вече съществува!", "danger")  # ЧЕРВЕНО
             return redirect(request.referrer)
 
-        # ✅ Assign correct avatar based on gender BEFORE saving
+        # ✅ Автоматично задаване на аватар
         avatar = f"/static/assets/default_avatar_{gender}.png"
 
-        # ✅ Create new user
+        # ✅ Създаване на нов потребител
         new_user = User(full_name=full_name, email=email, password=password, gender=gender, avatar=avatar)
         db.session.add(new_user)
         db.session.commit()
 
-        flash("✅ Регистрацията е успешна! Влезте в профила си.", "success")
-        return redirect("/login")
+        # ✅ Flash съобщение за успешна регистрация
+        flash("✅ Регистрацията е успешна! Влезте в профила си.", "success")  # ЗЕЛЕНО
+        return redirect(url_for("login"))
 
     return render_template("signup.html")
 
@@ -155,6 +156,7 @@ def login():
         if user and check_password_hash(user.password, request.form["password"]):
             login_user(user)
             return redirect("/")
+
         flash("❌ Невалиден имейл или парола!", "danger")
 
     return render_template("login.html")

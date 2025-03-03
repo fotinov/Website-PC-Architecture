@@ -5,12 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/favicon.ico') }}">
     <title>Вход</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-200 flex justify-center items-center min-h-screen">
 
-    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* 🌙 Dark Theme */
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        /* Form Container */
+        .container {
+            background: #1e1e1e;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Input Fields */
+        input {
+            background: #2c2c2c;
+            color: #e0e0e0;
+            border: 1px solid #444;
+        }
+
+        input:focus {
+            border-color: #3b82f6;
+            outline: none;
+        }
+
+        /* Login Button */
+        .btn-hover {
+            background: #3b82f6;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .btn-hover:hover {
+            background: #2563eb;
+        }
+
+        /* Registration Link (Green) */
+        .register-link {
+            color: #22c55e;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .register-link:hover {
+            color: #16a34a;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen">
+
+    <div class="container p-6 rounded-lg shadow-lg w-96">
         <h2 class="text-2xl font-bold text-center">Вход</h2>
+
+        <!-- ✅ Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="p-3 rounded mb-4 text-center
+                        {% if category == 'success' %} bg-green-500 text-white
+                        {% elif category == 'danger' %} bg-red-500 text-white
+                        {% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+
+
         <form method="POST" class="mt-4">
             <label class="block font-semibold">Имейл:</label>
             <input type="email" name="email" required class="w-full p-2 border rounded mt-1">
@@ -18,10 +83,10 @@
             <label class="block font-semibold mt-2">Парола:</label>
             <input type="password" name="password" required class="w-full p-2 border rounded mt-1">
 
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md mt-4 w-full">Влез</button>
+            <button type="submit" class="btn-hover text-white px-4 py-2 rounded-md mt-4 w-full">Влез</button>
         </form>
 
-        <p class="text-center mt-4">Нямате акаунт? <a href="/signup" class="text-green-500">Регистрация</a></p>
+        <p class="text-center mt-4">Нямате акаунт? <a href="/signup" class="register-link">Регистрация</a></p>
     </div>
 
 </body>

@@ -6,11 +6,73 @@
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/favicon.ico') }}">
     <title>Регистрация</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-200 flex justify-center items-center min-h-screen">
 
-    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+    <style>
+        /* 🌙 Dark Theme */
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        /* Form Container */
+        .container {
+            background: #1e1e1e;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Input Fields */
+        input, select {
+            background: #2c2c2c;
+            color: #e0e0e0;
+            border: 1px solid #444;
+        }
+
+        input:focus, select:focus {
+            border-color: #3b82f6;
+            outline: none;
+        }
+
+        /* Registration Button (Green) */
+        .register-btn {
+            background: #22c55e;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .register-btn:hover {
+            background: #16a34a;
+        }
+
+        /* Login Link (Blue) */
+        .login-link {
+            color: #3b82f6;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .login-link:hover {
+            color: #2563eb;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen">
+
+    <div class="container p-6 rounded-lg shadow-lg w-96">
         <h2 class="text-2xl font-bold text-center">Регистрация</h2>
+
+        <!-- ✅ Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="p-3 rounded mb-4 text-center
+                        {% if category == 'success' %} bg-green-500 text-white
+                        {% elif category == 'danger' %} bg-red-500 text-white
+                        {% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+
         <form method="POST" class="mt-4">
             <label class="block font-semibold">Име и Фамилия:</label>
             <input type="text" name="full_name" required class="w-full p-2 border rounded mt-1">
@@ -28,10 +90,10 @@
             <label class="block font-semibold mt-2">Парола:</label>
             <input type="password" name="password" required class="w-full p-2 border rounded mt-1">
 
-            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md mt-4 w-full">Регистрирай се</button>
+            <button type="submit" class="register-btn text-white px-4 py-2 rounded-md mt-4 w-full">Регистрирай се</button>
         </form>
 
-        <p class="text-center mt-4">Вече имате акаунт? <a href="/login" class="text-blue-500">Вход</a></p>
+        <p class="text-center mt-4">Вече имате акаунт? <a href="/login" class="login-link">Вход</a></p>
     </div>
 
 </body>
