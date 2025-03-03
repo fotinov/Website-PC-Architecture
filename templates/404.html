@@ -6,30 +6,48 @@
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/favicon.ico') }}">
     <title>Страницата не е намерена</title>
     <style>
+        /* 🌙 Dark Theme */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 50px;
-            background-color: #f8f8f8;
+            background-color: #121212;
+            color: #e0e0e0;
         }
         h1 {
             font-size: 50px;
-            color: #d9534f;
+            color: #ff5555;
         }
         p {
             font-size: 20px;
-            color: #555;
+            color: #bbb;
         }
         a {
             text-decoration: none;
-            color: #0275d8;
+            color: #3b82f6;
             font-weight: bold;
+            transition: color 0.3s ease-in-out;
+        }
+        a:hover {
+            color: #1e90ff;
+        }
+        .btn-back {
+            background: #1e3a8a;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background 0.3s ease-in-out;
+        }
+        .btn-back:hover {
+            background: #2563eb;
         }
     </style>
 </head>
 <body>
     <h1>404</h1>
     <p>Упс! Страницата не съществува.</p>
-    <a href="/">🔙 Обратно към началната страница</a>
+    <a href="/" class="btn-back">🔙 Обратно към началната страница</a>
 </body>
 </html>
