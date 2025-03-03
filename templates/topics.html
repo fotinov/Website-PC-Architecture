@@ -4,41 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/favicon.ico') }}">
-    <title>{{ topic.title }}</title>
+    <title>Всички теми</title>
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
         body {
             background: url("{{ url_for('static', filename='assets/page.png') }}") no-repeat center center fixed;
             background-size: cover;
             min-height: 100vh;
         }
-        .overlay {
-            background: rgba(0, 0, 0, 0.5);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .topic-card {
+            background: #1e1e1e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .topic-card:hover {
+            transform: scale(1.05);
+        }
+
+        .topic-card img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3b82f6;
+            font-weight: bold;
         }
     </style>
 </head>
-<body class="relative bg-gray-100">
+<body class="flex flex-col items-center">
 
-    <div class="overlay"></div>
+    <div class="container text-white">
+        <h1 class="text-3xl font-bold text-center mb-6">📚 Всички теми</h1>
 
-    <!-- Навигация -->
-    <nav class="bg-blue-700 p-6 text-white text-center text-3xl font-bold shadow-lg">
-        📚 Компютърни Архитектури
-    </nav>
-
-    <div class="container mx-auto p-6">
-        <div class="bg-white bg-opacity-95 shadow-lg rounded-lg p-6">
-            <img src="{{ topic.image }}" alt="{{ topic.title }}" class="w-full h-48 object-cover rounded-md">
-            <h1 class="text-3xl font-bold mt-4 text-gray-900">{{ topic.title }}</h1>
-            <p class="text-gray-700 text-lg mt-4 leading-relaxed">{{ topic.content }}</p>
-            <a href="/" class="mt-4 inline-block bg-gray-700 text-white px-4 py-2 rounded-md font-semibold hover:bg-gray-800 transition duration-300">⬅ Обратно</a>
-        </div>
+        {% for topic in topics %}
+            <div class="topic-card">
+                <a href="{{ url_for('topic_page', topic_id=topic.id) }}">
+                    <img src="{{ url_for('static', filename=topic.image) }}" alt="{{ topic.title }}">
+                    <h2 class="text-xl font-semibold">{{ topic.title }}</h2>
+                </a>
+                <p class="mt-2">{{ topic.content[:100] }}...</p>
+            </div>
+        {% endfor %}
     </div>
 
 </body>
