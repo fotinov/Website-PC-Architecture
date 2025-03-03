@@ -73,11 +73,16 @@ def home():
 
 
 # 📌 Topic Page
-@app.route("/topic/<int:topic_id>")
-def topic_page(topic_id):
-    topic = Topic.query.get_or_404(topic_id)
-    return render_template("topic.html", topic=topic)
+# @app.route("/topic/<int:topic_id>")
+# def topic_page(topic_id):
+#     topic = Topic.query.get_or_404(topic_id)
+#     return render_template("topic.html", topic=topic)
 
+
+@app.route("/topics")
+def topics():
+    all_topics = Topic.query.all()  # ✅ Fetch all topics
+    return render_template("topics.html", topics=all_topics)  # ✅ Passing topics
 
 # 📌 Profile Page
 @app.route("/profile", methods=["GET", "POST"])
