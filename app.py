@@ -5,6 +5,8 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import os
 from dotenv import load_dotenv
+from datetime import datetime
+
 
 
 # ✅ Load environment variables from .env file
@@ -71,12 +73,9 @@ def load_user(user_id):
 def home():
     return render_template("index.html")
 
-
-# 📌 Topic Page
-# @app.route("/topic/<int:topic_id>")
-# def topic_page(topic_id):
-#     topic = Topic.query.get_or_404(topic_id)
-#     return render_template("topic.html", topic=topic)
+@app.context_processor
+def inject_time():
+    return {"time": int(datetime.now().timestamp())}
 
 
 @app.route("/topics")

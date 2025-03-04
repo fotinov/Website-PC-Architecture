@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/favicon.ico') }}">
-    <title>Всички теми</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-    <!-- Tailwind CSS -->
+    <title>Всички теми</title>
     <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
     <style>
         body {
@@ -51,9 +52,11 @@
     </style>
 </head>
 <body class="flex flex-col items-center">
-
     <div class="container text-white">
-        <h1 class="text-3xl font-bold text-center mb-6">📚 Всички теми</h1>
+        <h1 class="text-3xl font-bold text-center mb-6 flex justify-center items-center">
+            <img src="{{ url_for('static', filename='assets/book_icon.svg') }}" alt="" class="w-8 h-8 mr-2">
+            Всички теми
+        </h1>
 
         {% for topic in topics %}
             <div class="topic-card">
@@ -61,10 +64,8 @@
                     <img src="{{ url_for('static', filename=topic.image) }}" alt="{{ topic.title }}">
                     <h2 class="text-xl font-semibold">{{ topic.title }}</h2>
                 </a>
-                <p class="mt-2">{{ topic.content[:100] }}...</p>
             </div>
         {% endfor %}
     </div>
-
 </body>
 </html>
