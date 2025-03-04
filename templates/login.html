@@ -78,6 +78,7 @@
 
 
         <form method="POST" class="mt-4">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <label class="block font-semibold">Имейл:</label>
             <input type="email" name="email" required class="w-full p-2 border rounded mt-1">
 

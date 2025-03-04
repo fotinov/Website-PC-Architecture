@@ -82,6 +82,7 @@
         {% endwith %}
 
         <form action="/contact" method="POST" class="space-y-4">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <input type="text" name="name" placeholder="Вашето име" required class="w-full px-4 py-2 border rounded-lg">
 
             <input type="email" name="email" placeholder="Вашият имейл" required class="w-full px-4 py-2 border rounded-lg">

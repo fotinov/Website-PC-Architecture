@@ -267,6 +267,7 @@
             <!-- Profile Edit Form -->
             <form method="POST">
                 <!-- ✅ Read-only email field -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <label class="block font-semibold text-gray-200">Имейл:</label>
                 <input type="email" value="{{ user.email }}" class="w-full p-2 border rounded mt-1 read-only" readonly>
 

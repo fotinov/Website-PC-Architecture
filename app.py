@@ -6,6 +6,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 import os
 from dotenv import load_dotenv
 from datetime import datetime
+from flask_wtf.csrf import CSRFProtect
 
 
 
@@ -28,6 +29,8 @@ db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 
+# Инициализирайте CSRF защитата
+csrf = CSRFProtect(app)
 
 # ✅ Create directories if they don't exist
 if not os.path.exists("static/assets"):
