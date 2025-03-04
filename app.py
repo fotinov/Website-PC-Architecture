@@ -87,32 +87,43 @@ def topics():
 @app.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
+    # ✅ Store previous page, but don't redirect automatically
+    if request.method == "GET" and request.referrer and "prev_page" not in session:
+        session["prev_page"] = request.referrer
+
     if request.method == "POST":
         current_user.full_name = request.form["full_name"]
         current_user.gender = request.form["gender"]
 
-        if current_user.gender == "male":
-            current_user.avatar = "/static/assets/default_avatar_male.png"
-        elif current_user.gender == "female":
-            current_user.avatar = "/static/assets/default_avatar_female.png"
-        else:
-            current_user.avatar = "/static/assets/default_avatar_other.png"
+        # ✅ Update avatar based on gender
+        avatar_map = {
+            "male": "/static/assets/default_avatar_male.png",
+            "female": "/static/assets/default_avatar_female.png",
+            "other": "/static/assets/default_avatar_other.png"
+        }
+        current_user.avatar = avatar_map.get(current_user.gender, "/static/assets/default_avatar_other.png")
 
+        # ✅ Update password if provided
         if request.form["password"]:
             current_user.password = generate_password_hash(request.form["password"])
 
         db.session.commit()
 
+        # ✅ Store success message in session
         session["profile_success"] = "✅ Промените са запазени!"
 
+        # ✅ Redirect to profile (so the success message appears)
         return redirect(url_for("profile"))
 
+    # ✅ Retrieve success message from session
     success_message = session.pop("profile_success", None)
 
+    # ✅ Fetch favorite topics
     favorite_topics = Favorite.query.filter_by(user_id=current_user.id).all()
     topics = [Topic.query.get(fav.topic_id) for fav in favorite_topics]
 
     return render_template("profile.html", user=current_user, topics=topics, success_message=success_message)
+
 
 
 @app.route('/profile', methods=['POST'])
