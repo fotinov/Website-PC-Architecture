@@ -1,0 +1,21 @@
+FLASK PATH =
+
+taskkill /IM python.exe /F
+$env:FLASK_APP="app.py"
+$env:FLASK_ENV="development"
+$env:FLASK_DEBUG="1"
+flask run
+
+============================================
+ENV = 
+
+SECRET_KEY=KEY_HERE
+DATABASE_URL=sqlite:///site.db
+
+
+============================================
+SECRET =
+
+import secrets
+
+print(secrets.token_hex(32))
