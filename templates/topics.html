@@ -18,19 +18,19 @@
     }
 
     .container {
-        max-width: 900px;
+        max-width: 1200px;
         margin: 40px auto;
         padding: 20px;
-        background: rgba(30, 30, 30, 0.9);
+        background: rgba(30, 30, 30, 0.85);
         border-radius: 10px;
         box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
     }
 
     .topic-card {
         background: #1e1e1e;
-        padding: 15px;
         border-radius: 8px;
-        margin-bottom: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         transition: transform 0.3s ease-in-out;
     }
 
@@ -39,31 +39,50 @@
     }
 
     .topic-card img {
-        max-width: 100%;
-        border-radius: 8px;
-        margin-bottom: 10px;
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-bottom: 3px solid #1e3a8a;
+    }
+
+    .topic-card h2 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #ddd;
+        margin-top: 10px;
+        text-align: center;
+        transition: color 0.3s ease;
+    }
+
+    .topic-card h2:hover {
+        color: #3b82f6;
+    }
+
+    .topic-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
     }
 
     a {
         text-decoration: none;
-        color: #3b82f6;
-        font-weight: bold;
+        color: inherit;
     }
 
-        /* Back Button */
-        .btn-back {
-            background: #1e3a8a !important;
-            color: white !important;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: background 0.3s ease-in-out;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
+    /* Back Button */
+    .btn-back {
+        background: #1e3a8a !important;
+        color: white !important;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background 0.3s ease-in-out;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
 
-        .btn-back:hover {
-            background: #4f8eff !important;
-        }
+    .btn-back:hover {
+        background: #4f8eff !important;
+    }
 
 </style>
 
@@ -79,14 +98,88 @@
             <a href="{{ url_for('home') }}" class="btn-back">⬅ Назад</a>
         </div>
 
-        {% for topic in topics %}
+        <div class="topic-grid">
+            <!-- Въведение в компютърните архитектури -->
             <div class="topic-card">
-                <a href="{{ url_for('topic_page', topic_id=topic.id) }}">
-                    <img src="{{ url_for('static', filename=topic.image) }}" alt="{{ topic.title }}">
-                    <h2 class="text-xl font-semibold">{{ topic.title }}</h2>
+                <a href="/topic/1">
+                    <img src="{{ url_for('static', filename='assets/topic1.jpg') }}" alt="Въведение в компютърните архитектури">
+                    <h2>Въведение в компютърните архитектури</h2>
                 </a>
             </div>
-        {% endfor %}
+
+            <!-- Основни компоненти на компютъра -->
+            <div class="topic-card">
+                <a href="/topic/2">
+                    <img src="{{ url_for('static', filename='assets/topic2.jpg') }}" alt="Основни компоненти на компютъра">
+                    <h2>Основни компоненти на компютъра</h2>
+                </a>
+            </div>
+
+            <!-- Централен процесор (CPU) -->
+            <div class="topic-card">
+                <a href="/topic/3">
+                    <img src="{{ url_for('static', filename='assets/topic3.jpg') }}" alt="Централен процесор (CPU)">
+                    <h2>Централен процесор (CPU)</h2>
+                </a>
+            </div>
+
+            <!-- Памет и управление на паметта -->
+            <div class="topic-card">
+                <a href="/topic/4">
+                    <img src="{{ url_for('static', filename='assets/topic4.jpg') }}" alt="Памет и управление на паметта">
+                    <h2>Памет и управление на паметта</h2>
+                </a>
+            </div>
+
+            <!-- Входно-изходни системи (I/O) -->
+            <div class="topic-card">
+                <a href="/topic/5">
+                    <img src="{{ url_for('static', filename='assets/topic5.jpg') }}" alt="Входно-изходни системи (I/O)">
+                    <h2>Входно-изходни системи (I/O)</h2>
+                </a>
+            </div>
+
+            <!-- Компютърни инструкции и набори от инструкции (ISA) -->
+            <div class="topic-card">
+                <a href="/topic/6">
+                    <img src="{{ url_for('static', filename='assets/topic6.jpg') }}" alt="Компютърни инструкции и набори от инструкции (ISA)">
+                    <h2>Компютърни инструкции и набори от инструкции (ISA)</h2>
+                </a>
+            </div>
+
+            <!-- Паралелни и многопроцесорни архитектури -->
+            <div class="topic-card">
+                <a href="/topic/7">
+                    <img src="{{ url_for('static', filename='assets/topic7.jpg') }}" alt="Паралелни и многопроцесорни архитектури">
+                    <h2>Паралелни и многопроцесорни архитектури</h2>
+                </a>
+            </div>
+
+            <!-- Оптимизация на производителността -->
+            <div class="topic-card">
+                <a href="/topic/8">
+                    <img src="{{ url_for('static', filename='assets/topic8.jpg') }}" alt="Оптимизация на производителността">
+                    <h2>Оптимизация на производителността</h2>
+                </a>
+            </div>
+
+            <!-- Специализирани архитектури -->
+            <div class="topic-card">
+                <a href="/topic/9">
+                    <img src="{{ url_for('static', filename='assets/topic9.jpg') }}" alt="Специализирани архитектури">
+                    <h2>Специализирани архитектури</h2>
+                </a>
+            </div>
+
+            <!-- Симулации и практически примери -->
+            <div class="topic-card">
+                <a href="/topic/10">
+                    <img src="{{ url_for('static', filename='assets/topic10.jpg') }}" alt="Симулации и практически примери">
+                    <h2>Симулации и практически примери</h2>
+                </a>
+            </div>
+
+        </div>
     </div>
 </body>
 </html>
